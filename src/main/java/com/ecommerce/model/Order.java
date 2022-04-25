@@ -8,14 +8,14 @@ public class Order {
     private Long id;
     private LocalDate dateCreated;
     private String status;
-    private HashSet<OrderProduct> orderProducts = new HashSet<>();
+    private ArrayList<OrderProduct> orderProducts = new ArrayList<>();
     private Client client;
 
     public Order() {
         super();
     }
 
-    public Order(Long id, LocalDate dateCreated, String status, HashSet<OrderProduct> orderProducts, Client client) {
+    public Order(Long id, LocalDate dateCreated, String status, ArrayList<OrderProduct> orderProducts, Client client) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.status = status;
@@ -29,7 +29,7 @@ public class Order {
         return id;
     }
 
-    public HashSet<OrderProduct> getOrderProduct() {
+    public ArrayList<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 
@@ -79,7 +79,7 @@ public class Order {
         return result;
     }
 
-    public void addProduct(Product product, int quantity) {
+    public void addProduct(Product product, int quantity) throws Exception {
 
         boolean productExists = false;
 
@@ -97,7 +97,7 @@ public class Order {
                 product.setQuantity(product.getQuantity() - quantity);
                 orderProducts.add(newOrderProduct);
             } else {
-                System.out.println("Pas assez de " + product.getName());
+                throw new Exception("-- Pas assez de " + product.getName());
             }
         }
     }

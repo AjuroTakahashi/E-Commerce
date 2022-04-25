@@ -2,22 +2,23 @@ package com.ecommerce;
 
 import com.ecommerce.model.Client;
 import com.ecommerce.model.Order;
+import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import exceptions.ResourceNotFoundException;
+import exceptions.StockException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import services.ClientService;
+import services.OrderService;
+import services.ProductService;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 
 //@SpringBootApplication
 public class ECommerceApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 //        SpringApplication.run(ECommerceApplication.class, args);
         Product p1 = new Product(1L, "Jambon", "Viande", "photo", 2.0, 10);
         Product p2 = new Product(2L, "Baguette", "Pain", "photo", 3.0, 22);
@@ -26,27 +27,43 @@ public class ECommerceApplication {
 
         Client client = new Client(1L, "Jean", "1234");
         Client client2 = new Client(2L, "Dupont", "1234");
-        Order order = new Order(1L, LocalDate.now(), "en cours", null, client);
 
-        order.addProduct(p1, 2);
-        order.addProduct(p1, 8);
-        order.addProduct(p2, 4);
-        order.addProduct(p3, 4);
+        Order order = new Order(1l, LocalDate.now(), null, new ArrayList<OrderProduct>(), client);
 
         ApplicationContext context = new ClassPathXmlApplicationContext("file:src/main/resources/services.xml");
         ClientService clientService = context.getBean("clients", ClientService.class);
         clientService.save(client);
         clientService.save(client);
         clientService.save(client2);
+//        System.out.println(clientService.getClientById(2L));
 
-        System.out.println(clientService.getClients());
+        ProductService productService = context.getBean("products", ProductService.class);
+        productService.save(p1);
+        productService.save(p2);
+        productService.save(p3);
+//        productService.removeProduct(p1, 10);
 
-        order.setStatus("Payé");
-        System.out.println(order.getNumberOfProducts());
-        System.out.println(order.getTotalNumberOfProducts());
-        System.out.println(order.getTotaOrderlPrice());
+        OrderService orderService = context.getBean("orders", OrderService.class);
 
-        System.out.println(order);
+        order.addProduct(p1, 2); // Vérifié avant, dans la création de l'order
+        order.addProduct(p2, 5);
+
+        System.out.println(order); // Le statut doit être à “null”
+
+        orderService.create(order);
+        System.out.println(order); // Le statut doit être à “En cours”
+
+        orderService.update(order);
+        System.out.println(order); // Le statut doit être à “Payée” (sauf si vérifié avant)
+
+//        System.out.println(clientService.getClients());
+//
+//        order.setStatus("Payé");
+//        System.out.println(order.getNumberOfProducts());
+//        System.out.println(order.getTotalNumberOfProducts());
+//        System.out.println(order.getTotaOrderlPrice());
+//
+//        System.out.println(order);
     }
 
 }
