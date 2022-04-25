@@ -4,9 +4,17 @@ public class OrderProduct {
 
     private Integer quantity;
     private Product product;
+    private Order order;
 
     public OrderProduct() {
         super();
+    }
+    public OrderProduct(Order order, Product product, Integer quantity)
+    {
+        super();
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
     }
 
     public Integer getQuantity() {

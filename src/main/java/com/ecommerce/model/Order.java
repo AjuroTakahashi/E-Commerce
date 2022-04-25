@@ -56,24 +56,24 @@ public class Order {
     }
 
     public Integer getNumberOfProducts() {
-        ArrayList<Long> productList = new ArrayList<>();
+//        ArrayList<Long> productList = new ArrayList<>();
+//
+//        for (OrderProduct orderProduct : orderProducts) {
+//            Long productId = orderProduct.getProduct().getId();
+//
+//            if (!productList.contains(productId)) {
+//                productList.add(productId);
+//            }
+//        }
 
-        for (OrderProduct orderProduct : orderProducts) {
-            Long productId = orderProduct.getProduct().getId();
-
-            if (!productList.contains(productId)) {
-                productList.add(productId);
-            }
-        }
-
-        return productList.size();
+        return orderProducts.size();
     }
 
     public Integer getTotalNumberOfProducts() {
         int result = 0;
 
         for (OrderProduct orderProduct : orderProducts) {
-            result += 1;
+            result += orderProduct.getQuantity();
         }
 
         return result;
@@ -85,17 +85,15 @@ public class Order {
 
         for (OrderProduct orderProduct : orderProducts) {
             if (Objects.equals(orderProduct.getProduct().getId(), product.getId()) && checkStock(product, quantity)) {
-                    orderProduct.setQuantity(orderProduct.getQuantity() + quantity);
-                    product.setQuantity(product.getQuantity() - quantity);
-                    productExists = true;
+                orderProduct.setQuantity(orderProduct.getQuantity() + quantity);
+                product.setQuantity(product.getQuantity() - quantity);
+                productExists = true;
             }
         }
 
         if (!productExists) {
             if (checkStock(product, quantity)) {
-                OrderProduct newOrderProduct = new OrderProduct();
-                newOrderProduct.setProduct(product);
-                newOrderProduct.setQuantity(quantity);
+                OrderProduct newOrderProduct = new OrderProduct(this, product, quantity);
                 product.setQuantity(product.getQuantity() - quantity);
                 orderProducts.add(newOrderProduct);
             } else {
