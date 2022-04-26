@@ -1,11 +1,13 @@
-package services;
+package com.ecommerce.services;
 
 import com.ecommerce.model.Client;
 import exceptions.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Service("clients")
 public class ClientServiceImpl implements ClientService {
     private ArrayList<Client> clientsList = new ArrayList<>();
 

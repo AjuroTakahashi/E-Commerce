@@ -1,4 +1,4 @@
-package services;
+package com.ecommerce.services;
 
 import com.ecommerce.model.Product;
 import exceptions.StockException;

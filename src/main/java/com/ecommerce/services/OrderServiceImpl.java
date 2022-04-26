@@ -1,17 +1,21 @@
-package services;
+package com.ecommerce.services;
 
-import com.ecommerce.model.Client;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
 import exceptions.StockException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Service("orders")
 public class OrderServiceImpl implements OrderService{
 
     private ArrayList<Order> orderList = new ArrayList<>();
+    @Autowired
+    private ProductService productService;
 
     @Override
     public ArrayList<Order> getAllOrders() {
@@ -44,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    public void setProductService(ProductServiceImpl productService) {
-
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 }

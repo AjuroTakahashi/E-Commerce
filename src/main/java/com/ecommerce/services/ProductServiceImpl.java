@@ -1,12 +1,13 @@
-package services;
+package com.ecommerce.services;
 
 import com.ecommerce.model.Product;
 import exceptions.StockException;
+import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Service("products")
 public class ProductServiceImpl implements ProductService {
     private ArrayList<Product> productsList = new ArrayList<>();
 

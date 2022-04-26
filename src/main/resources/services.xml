@@ -3,12 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="clients" class="services.ClientServiceImpl">
+    <bean id="clients" class="com.ecommerce.services.ClientServiceImpl">
     </bean>
-    <bean id="products" class="services.ProductServiceImpl">
+    <bean id="products" class="com.ecommerce.services.ProductServiceImpl">
     </bean>
 
-    <bean id="orders" class="services.OrderServiceImpl">
+    <bean id="orders" class="com.ecommerce.services.OrderServiceImpl">
         <property name="productService" ref="products"></property>
     </bean>
 </beans>
