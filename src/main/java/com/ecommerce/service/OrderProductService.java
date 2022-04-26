@@ -1,4 +1,4 @@
-package com.ecommerce.services;
+package com.ecommerce.service;
 
 public interface OrderProductService {
 }

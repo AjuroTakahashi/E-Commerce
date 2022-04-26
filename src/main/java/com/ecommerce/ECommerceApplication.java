@@ -4,22 +4,23 @@ import com.ecommerce.model.Client;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import com.ecommerce.services.ClientService;
-import com.ecommerce.services.OrderService;
-import com.ecommerce.services.ProductService;
+import com.ecommerce.service.ClientService;
+import com.ecommerce.service.OrderService;
+import com.ecommerce.service.ProductService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-//@SpringBootApplication
-@ComponentScan("com.*")
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 public class ECommerceApplication {
 
-    public static void mainAVANT(String[] args) throws Exception {
+    public static void mainTP12(String[] args) throws Exception {
 //        SpringApplication.run(ECommerceApplication.class, args);
         Product p1 = new Product(1L, "Jambon", "Viande", "photo", 2.0, 10);
         Product p2 = new Product(2L, "Baguette", "Pain", "photo", 3.0, 22);
@@ -67,7 +68,8 @@ public class ECommerceApplication {
 //        System.out.println(order);
     }
 
-    public static void main(String[] args) throws Exception {
+    // @ComponentScan("com.*") // Rajouter sur la classe pour que ça marche
+    public static void mainTP3(String[] args) throws Exception {
         Product p1 = new Product(1L, "Jambon", "Viande", "photo", 2.0, 10);
         Product p2 = new Product(2L, "Baguette", "Pain", "photo", 3.0, 22);
         Product p3 = new Product(3L, "Tomate", "Légume", "photo", 4.0, 13);
@@ -105,5 +107,9 @@ public class ECommerceApplication {
 
         orderService.update(order);
         System.out.println(order); // Le statut doit être à “Payée” (sauf si vérifié avant)
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ECommerceApplication.class, args);
     }
 }

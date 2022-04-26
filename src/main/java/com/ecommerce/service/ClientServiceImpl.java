@@ -1,7 +1,7 @@
-package com.ecommerce.services;
+package com.ecommerce.service;
 
 import com.ecommerce.model.Client;
-import exceptions.ResourceNotFoundException;
+import com.ecommerce.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -84,7 +84,7 @@ public class Order {
         boolean productExists = false;
 
         for (OrderProduct orderProduct : orderProducts) {
-            if (Objects.equals(orderProduct.getProduct().getId(), product.getId()) && checkStock(product, quantity)) {
+            if (Objects.equals(orderProduct.getProduct().getId(), product.getId()) && isAvailable(product, quantity)) {
                 orderProduct.setQuantity(orderProduct.getQuantity() + quantity);
                 product.setQuantity(product.getQuantity() - quantity);
                 productExists = true;
@@ -92,7 +92,7 @@ public class Order {
         }
 
         if (!productExists) {
-            if (checkStock(product, quantity)) {
+            if (isAvailable(product, quantity)) {
                 OrderProduct newOrderProduct = new OrderProduct(this, product, quantity);
                 product.setQuantity(product.getQuantity() - quantity);
                 orderProducts.add(newOrderProduct);
@@ -102,7 +102,7 @@ public class Order {
         }
     }
 
-    public boolean checkStock(Product product, int quantity) {
+    public boolean isAvailable(Product product, int quantity) {
         return product.getQuantity() >= quantity;
     }
 

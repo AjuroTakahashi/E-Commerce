@@ -1,4 +1,4 @@
-package exceptions;
+package com.ecommerce.exception;
 
 public class ResourceNotFoundException extends Exception {
 

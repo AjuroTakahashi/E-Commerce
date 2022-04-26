@@ -1,7 +1,7 @@
-package com.ecommerce.services;
+package com.ecommerce.service;
 
 import com.ecommerce.model.Order;
-import exceptions.StockException;
+import com.ecommerce.exception.StockException;
 
 import java.util.ArrayList;
 

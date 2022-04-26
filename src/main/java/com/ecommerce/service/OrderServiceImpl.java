@@ -1,9 +1,9 @@
-package com.ecommerce.services;
+package com.ecommerce.service;
 
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
-import exceptions.StockException;
+import com.ecommerce.exception.StockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

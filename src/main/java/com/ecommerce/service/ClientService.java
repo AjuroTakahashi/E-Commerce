@@ -1,9 +1,8 @@
-package com.ecommerce.services;
+package com.ecommerce.service;
 
 import com.ecommerce.model.Client;
-import exceptions.ResourceNotFoundException;
+import com.ecommerce.exception.ResourceNotFoundException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public interface ClientService {

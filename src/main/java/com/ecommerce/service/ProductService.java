@@ -1,11 +1,9 @@
-package com.ecommerce.services;
+package com.ecommerce.service;
 
 import com.ecommerce.model.Product;
-import exceptions.StockException;
+import com.ecommerce.exception.StockException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public interface ProductService {
     public ArrayList<Product> getAllProducts();
