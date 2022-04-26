@@ -42,7 +42,6 @@ public class ProductServiceImpl implements ProductService {
 
     public void removeProduct(Product product, int quantity) throws StockException{
 
-        System.out.println(product.getQuantity());
         if (isProductAvailable(product, quantity)) {
             Product foundProduct = getProductById(product.getId());
             foundProduct.setQuantity(foundProduct.getQuantity() - quantity);

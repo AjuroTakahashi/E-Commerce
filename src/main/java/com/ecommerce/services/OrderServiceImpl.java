@@ -34,16 +34,19 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void update(Order order) throws StockException {
         if (!Objects.equals(order.getStatus(), "Payée.")) {
-            for (Order o : orderList) {
-                for (OrderProduct op : o.getOrderProducts()) {
-                    Product product = op.getProduct();
-                    if (order.checkStock(product, op.getQuantity())) {
-                        product.setQuantity(product.getQuantity() - op.getQuantity());
-                    } else {
-                        throw new StockException();
-                    }
+            for (OrderProduct op : order.getOrderProducts()) {
+                Product product = op.getProduct();
+                if (!productService.isProductAvailable(product, op.getQuantity())) {
+                    throw new StockException();
                 }
-                order.setStatus("Payée.");
+            }
+            order.setStatus("Payée.");
+
+            for (OrderProduct op : order.getOrderProducts()) {
+                Product product = op.getProduct();
+                if (productService.isProductAvailable(product, op.getQuantity())) {
+                    productService.removeProduct(product, op.getQuantity());
+                }
             }
         }
     }
