@@ -2,3 +2,15 @@
     background-image: url("../images/mokoko.png");
     background-repeat: no-repeat;
 }
+
+
+
+.card-img-top {
+    object-fit: cover;
+    max-width: 30rem;
+    text-align: center;
+}
+
+.card {
+    height: 100%;
+}

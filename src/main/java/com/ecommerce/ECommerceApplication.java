@@ -4,11 +4,13 @@ import com.ecommerce.model.Client;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ecommerce.service.ClientService;
 import com.ecommerce.service.OrderService;
@@ -111,5 +113,19 @@ public class ECommerceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ECommerceApplication.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner runner(ProductService productService) {
+        return args -> {
+            Product product1 = new Product(1l, "Rien", "Basique, rien","../../resources/images/mokoko2.webp", 12d,2);
+            Product product2 = new Product(2l, "Rien premium", "C'est peut-être rien mais c'est premium, ça vaut bien quelque chose", "../../resources/images/mokoko3.webp", 32d,4);
+            Product product3 = new Product(3l, "Rien 1/2", "Un peu plus que rien, mais c'est toujours rien", "../../resources/images/mokoko4.webp", 20d,28);
+            Product product4 = new Product(4l, "Rien 1/2", "Un peu plus que rien, mais c'est toujours rien", "../../resources/images/mokoko4.webp", 20d,28);
+            productService.save(product1);
+            productService.save(product2);
+            productService.save(product3);
+            productService.save(product4);
+        };
     }
 }
