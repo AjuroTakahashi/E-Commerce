@@ -25,6 +25,6 @@ public class ProductController {
     public String getProductById(Model model, @PathVariable("productId") Long id) {
         System.out.println("/products/id : get product by id (" + id + ")");
         model.addAttribute("product", productService.getProductById(id));
-        return "base";
+        return "productSingle";
     }
 }

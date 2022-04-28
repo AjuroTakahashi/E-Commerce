@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -48,16 +47,3 @@
         </div>
     </div>
 </header>
-
-
-<div class="album py-5 bg-light">
-    <div class="container">
-
-        <c:import var="product" url="productSingle.jsp"/>
-        <c:out value="${product}" escapeXml="false"/>
-
-    </div>
-</div>
-
-</body>
-</html>

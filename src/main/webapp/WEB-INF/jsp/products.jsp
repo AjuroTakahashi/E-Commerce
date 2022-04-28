@@ -13,8 +13,8 @@
             <div class="card-footer">
                 <div class="row justify-content-center">
                     <spring:url value="/products/${product.id}" var="url" htmlEscape="true"/>
-                    <a type="button" class="btn btn-sm btn-primary mr-4" href="${url}">Voir</a>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" href="">Mettre dans le panier</button>
+                    <a type="button" class="btn btn-sm btn-outline-secondary mr-4" href="${url}">Voir</a>
+                    <button type="button" class="btn btn-sm btn-primary" href="">Mettre dans le panier</button>
                 </div>
             </div>
         </div>
