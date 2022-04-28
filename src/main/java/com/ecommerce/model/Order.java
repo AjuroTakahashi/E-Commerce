@@ -1,25 +1,36 @@
 package com.ecommerce.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
+@Entity
+@Table(name="Client_order")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateCreated;
     private String status;
-    private ArrayList<OrderProduct> orderProducts = new ArrayList<>();
+    @OneToMany(mappedBy = "order")
+    private Set<OrderProduct> orderProducts;
+    @ManyToOne
     private Client client;
 
     public Order() {
         super();
     }
 
-    public Order(Long id, LocalDate dateCreated, String status, ArrayList<OrderProduct> orderProducts, Client client) {
+    public Order(Long id, LocalDate dateCreated, String status, Set<OrderProduct> orderProducts, Client client) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.status = status;
+
+        System.out.println("construit");
+
         if (orderProducts != null) {
+            System.out.println(orderProducts.size());
             this.orderProducts = orderProducts;
         }
         this.client = client;
@@ -29,7 +40,7 @@ public class Order {
         return id;
     }
 
-    public ArrayList<OrderProduct> getOrderProducts() {
+    public Set<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 
@@ -45,7 +56,7 @@ public class Order {
         return client;
     }
 
-    public Double getTotaOrderlPrice() {
+    public Double gettotalOrderPrice() {
         Double result = 0.00;
 
         for (OrderProduct orderProduct : orderProducts) {
@@ -55,17 +66,7 @@ public class Order {
         return result;
     }
 
-    public Integer getNumberOfProducts() {
-//        ArrayList<Long> productList = new ArrayList<>();
-//
-//        for (OrderProduct orderProduct : orderProducts) {
-//            Long productId = orderProduct.getProduct().getId();
-//
-//            if (!productList.contains(productId)) {
-//                productList.add(productId);
-//            }
-//        }
-
+    public Integer numberOfProducts() {
         return orderProducts.size();
     }
 

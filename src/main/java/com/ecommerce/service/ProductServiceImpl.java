@@ -2,25 +2,30 @@ package com.ecommerce.service;
 
 import com.ecommerce.model.Product;
 import com.ecommerce.exception.StockException;
+import com.ecommerce.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service("products")
 public class ProductServiceImpl implements ProductService {
-    private ArrayList<Product> productsList = new ArrayList<>();
+//    private ArrayList<Product> productsList = new ArrayList<>();
 
+    @Autowired
+    private ProductRepository productRepository;
     private ProductServiceImpl() {
     }
 
-    public ArrayList<Product> getAllProducts() {
-        return productsList;
+    public List<Product> getAllProducts() {
+        return (List<Product>) productRepository.findAll();
     }
 
     public Product getProductById(Long id) {
         Product result = null;
-        for (Product product : productsList) {
+        for (Product product : productRepository.findAll()) {
             if (Objects.equals(product.getId(), id)) {
                 result = product;
             }
@@ -29,9 +34,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product save(Product product) {
-        if (!productsList.contains(product)) {
-            productsList.add(product);
-        }
+        productRepository.save(product);
         return product;
     }
 
@@ -49,4 +52,6 @@ public class ProductServiceImpl implements ProductService {
             throw new StockException();
         }
     }
+
+
 }

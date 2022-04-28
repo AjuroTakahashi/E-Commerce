@@ -11,4 +11,6 @@
     <bean id="orders" class="com.ecommerce.service.OrderServiceImpl">
         <property name="productService" ref="products"></property>
     </bean>
+
+
 </beans>

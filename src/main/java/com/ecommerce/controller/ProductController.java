@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.repository.ProductRepository;
 import com.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
 
 //    @GetMapping(value = { "/", "/" })
 //    public String getProducts(Model model) {
@@ -24,7 +27,7 @@ public class ProductController {
     @GetMapping("/{productId}")
     public String getProductById(Model model, @PathVariable("productId") Long id) {
         System.out.println("/products/id : get product by id (" + id + ")");
-        model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("product", productRepository.getById(id));
         return "productSingle";
     }
 }

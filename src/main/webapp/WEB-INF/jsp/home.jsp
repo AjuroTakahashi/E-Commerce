@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
 <%@ include file="header.jsp"%>
 
 <main role="main">
-
-<%--    <img src="resources/images/mokoko.png" class="" alt="Responsive image"/>--%>
 
     <section class="jumbotron text-center mokoko">
         <div class="container">
