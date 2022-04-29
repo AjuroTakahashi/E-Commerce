@@ -19,6 +19,8 @@ import com.ecommerce.service.ClientService;
 import com.ecommerce.service.OrderService;
 import com.ecommerce.service.ProductService;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -152,5 +154,10 @@ public class ECommerceApplication {
 
 //            System.out.println(orderRepository.findAll());
         };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 }
