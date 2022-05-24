@@ -5,6 +5,7 @@ import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,14 +15,23 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ecommerce.service.ClientService;
 import com.ecommerce.service.OrderService;
 import com.ecommerce.service.ProductService;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -138,6 +148,14 @@ public class ECommerceApplication {
     @Bean
     CommandLineRunner runner(ProductService productService, ClientService clientService, OrderService orderService, OrderRepository orderRepository) {
         return args -> {
+//            for (Client client: clientService.getClients()) {
+//                String encoded = new BCryptPasswordEncoder().encode(client.getPassword());
+//                client.setPassword(encoded);
+//                System.out.println(client.getPassword());
+//                clientService.updateClient(client);
+//            }
+
+
 //            Product product1 = new Product(1l, "Rien", "Basique, rien","../../resources/images/mokoko2.webp", 12d,2);
 //            Product product2 = new Product(2l, "Rien premium", "C'est peut-être rien mais c'est premium, ça vaut bien quelque chose", "../../resources/images/mokoko3.webp", 32d,4);
 //            Product product3 = new Product(3l, "Rien 1/2", "Un peu plus que rien, mais c'est toujours rien", "../../resources/images/mokoko4.webp", 20d,28);
@@ -147,7 +165,7 @@ public class ECommerceApplication {
 //            productService.save(product3);
 //            productService.save(product4);
 
-//            Client client = new Client(null, "Jean", "1234");
+            Client client = new Client(null, "moi", "moi");
 //            Client client2 = new Client(null, "Dupont", "1234");
 //            clientService.save(client);
 //            clientService.save(client2);
@@ -157,7 +175,15 @@ public class ECommerceApplication {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
+
+    @Configuration
+    @EnableGlobalMethodSecurity(
+            prePostEnabled = true,
+            securedEnabled = true,
+            jsr250Enabled = true)
+    public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration { }
+
 }

@@ -13,7 +13,7 @@ public class Order {
     private Long id;
     private LocalDate dateCreated;
     private String status;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts;
     @ManyToOne
     private Client client;
@@ -29,10 +29,10 @@ public class Order {
 
         System.out.println("construit");
 
-        if (orderProducts != null) {
-            System.out.println(orderProducts.size());
-            this.orderProducts = orderProducts;
-        }
+//        if (orderProducts != null) {
+//            System.out.println(orderProducts.size());
+//            this.orderProducts = orderProducts;
+//        }
         this.client = client;
     }
 
@@ -54,6 +54,10 @@ public class Order {
 
     public Client getClient() {
         return client;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Double gettotalOrderPrice() {
@@ -82,24 +86,33 @@ public class Order {
 
     public void addProduct(Product product, int quantity) throws Exception {
 
-        boolean productExists = false;
+        OrderProduct orderProduct = null;
 
-        for (OrderProduct orderProduct : orderProducts) {
-            if (Objects.equals(orderProduct.getProduct().getId(), product.getId()) && isAvailable(product, quantity)) {
-                orderProduct.setQuantity(orderProduct.getQuantity() + quantity);
-                product.setQuantity(product.getQuantity() - quantity);
-                productExists = true;
+//        if (orderProducts != null) {
+        for (OrderProduct op : orderProducts) {
+            if (Objects.equals(op.getProduct().getId(), product.getId())) {
+//                orderProduct.setQuantity(orderProduct.getQuantity() + quantity);
+//                product.setQuantity(product.getQuantity() - quantity);
+                orderProduct = op;
+                op.setQuantity(op.getQuantity() + quantity);
             }
         }
+//        }
 
-        if (!productExists) {
-            if (isAvailable(product, quantity)) {
-                OrderProduct newOrderProduct = new OrderProduct(this, product, quantity);
-                product.setQuantity(product.getQuantity() - quantity);
-                orderProducts.add(newOrderProduct);
-            } else {
-                throw new Exception("-- Pas assez de " + product.getName());
-            }
+        if (orderProduct == null) {
+//            if (isAvailable(product, quantity)) {
+            OrderProductId orderProductId = new OrderProductId(product.getId(), id);
+            orderProduct = new OrderProduct(orderProductId, product, this, quantity);
+            orderProducts.add(orderProduct);
+//                product.setQuantity(product.getQuantity() - quantity);
+//                orderProducts.add(newOrderProduct);
+//                result = new OrderProduct();
+//                result.setOrder(this);
+//                result.setProduct(product);
+//                result.setQuantity(quantity);
+//            } else {
+//                throw new Exception("-- Pas assez de " + product.getName());
+//            }
         }
     }
 

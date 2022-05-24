@@ -2,15 +2,17 @@ package com.ecommerce.service;
 
 import com.ecommerce.model.Client;
 import com.ecommerce.exception.ResourceNotFoundException;
+import com.ecommerce.model.ClientDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface ClientService {
 
-    public List<Client> getClients();
-    public Client getClientById(Long clientId) throws ResourceNotFoundException;
-    public Client getClientByName(String name) throws ResourceNotFoundException;
-
-    public Client save(Client client);
+    List<Client> getClients();
+    Client getClientById(Long clientId) throws ResourceNotFoundException;
+    Client getClientByName(String name) throws ResourceNotFoundException;
+    Client save(Client client) throws Exception;
+    void updateClient(Client client);
+    Client registerNewClient(ClientDto clientDto) throws Exception;
 }

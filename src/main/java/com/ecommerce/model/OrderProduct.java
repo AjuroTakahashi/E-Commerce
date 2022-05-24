@@ -27,6 +27,15 @@ public class OrderProduct {
         this.quantity = quantity;
     }
 
+    public OrderProduct(OrderProductId orderProductId, Product product, Order order, int quantity) {
+        super();
+        this.id = orderProductId;
+        this.product = product;
+        this.order = order;
+        this.quantity = quantity;
+
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -47,6 +56,9 @@ public class OrderProduct {
         return product.getPrice() * quantity;
     }
 
+    public void setOrder(Order order) {
+        this.order = order;
+    }
     @Override
     public String toString() {
         return "OrderProduct{" +

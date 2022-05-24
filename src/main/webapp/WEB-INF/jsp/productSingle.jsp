@@ -16,7 +16,11 @@
                         <p class="card-text">${product.description}</p>
                     </div>
                     <div class="card-footer text-right">
-                        <button type="button" class="btn btn-sm btn-primary">Mettre dans le panier</button>
+                        <security:authorize access="isAuthenticated()">
+                            <spring:url value="/products/add/${product.id}" var="addToCart" htmlEscape="true"/>
+                            <a href="${addToCart}" class="btn btn-sm btn-primary" role="button">Ajouter au panier</a>
+<%--                            <button type="button" class="btn btn-sm btn-primary">Mettre dans le panier</button>--%>
+                        </security:authorize>
                     </div>
                 </div>
             </div>

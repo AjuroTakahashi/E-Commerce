@@ -6,6 +6,8 @@ import com.ecommerce.model.Order;
 import com.ecommerce.service.ClientService;
 import com.ecommerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class APIController {
     @Autowired
     private OrderService orderService;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/clients")
     public List<Client> getClients(Model model, @RequestParam(required = false) String username) throws ResourceNotFoundException {
         System.out.println("/clients : get all clients " + username);
@@ -30,6 +33,8 @@ public class APIController {
         return clientService.getClients();
     }
 
+    @Secured("ROLE_ADMIN")
+    @PreAuthorize("'David' == authentication.principal.username")
     @GetMapping(value = "/orders")
     public List<Order> getOrder(Model model, @RequestParam(required = false) Long id) throws ResourceNotFoundException {
         System.out.println("/orders : " + id);

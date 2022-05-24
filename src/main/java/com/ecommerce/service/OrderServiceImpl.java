@@ -1,5 +1,6 @@
 package com.ecommerce.service;
 
+import com.ecommerce.model.Client;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderProduct;
 import com.ecommerce.model.Product;
@@ -8,15 +9,10 @@ import com.ecommerce.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service("orders")
 public class OrderServiceImpl implements OrderService{
-
-//    private ArrayList<Order> orderList = new ArrayList<>();
-
     @Autowired
     private ProductService productService;
     @Autowired
@@ -38,7 +34,6 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(order);
         return order;
     }
-
     @Override
     public void update(Order order) throws StockException {
 
@@ -59,6 +54,45 @@ public class OrderServiceImpl implements OrderService{
                 }
             }
         }
+    }
+
+    @Override
+    public Order getOrderByClient(Client client) {
+
+        Order order = null;
+        for (Order o: getAllOrders()) {
+            if (o.getClient() == client) {
+                order = o;
+            }
+        }
+        return order;
+    }
+
+    @Override
+    public void save(Order order) {
+        orderRepository.save(order);
+    }
+
+    @Override
+    public Order getCurrentOrder(Client client){
+
+        Optional<Order> orderOptional =  orderRepository.findByClientAndStatus(client, "En cours");
+
+        if (orderOptional.isPresent()) {
+            return orderOptional.get();
+        }
+        else{
+            Date date = new Date();
+            Order order = new Order(null, new java.sql.Timestamp(
+                    date.getTime()).toLocalDateTime().toLocalDate(), "En cours", new HashSet<>(), client);
+
+            return orderRepository.save(order);
+        }
+    }
+
+    @Override
+    public void addOrderProduct(Order order, Product product, int quantity) throws Exception {
+//        return getOrder(order.getId()).addProduct(product, quantity);
     }
 
     public void setProductService(ProductService productService) {
